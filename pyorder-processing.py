@@ -8,7 +8,7 @@ from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
 # To run example
-# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.1.0 pyorder-processing.py
+# spark-submit --conf spark.hadoop.fs.defaultFS=hdfs://192.168.122.60:54310  --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.1.0 pyorder-processing.py
 
 # New way to run it with checkpointing: 1000040000
 # spark-submit --conf spark.sql.streaming.checkpointLocation=/tmp/check --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.1.0    pyorder-processing.py
@@ -23,8 +23,6 @@ if __name__ == "__main__":
         .getOrCreate()
     kafkaURI=os.environ.get('KAFKA_URI',"192.168.0.11:9092")
     kafkaTopic=os.environ.get('KAFKA_TOPIC',"devnet")
-    hadoopConf=spark.sparkContext._jsc.hadoopConfiguration()
-    hadoopConf.set("spark.hadoop.fs.defaultFS", "hdfs://192.168.33.40:54310")
     print("KAFKA CONNECTION: "+ kafkaURI)
     # Create DataSet representing the stream of input lines from kafka
     lines = spark\
@@ -50,8 +48,8 @@ if __name__ == "__main__":
     #     .start()
     query = df\
         .writeStream\
-        .option('path','hdfs://192.168.33.40:54310/orders/newyork/warehouse')\
-        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/newyork/check')\
+        .option('path','hdfs://192.168.122.60:54310/orders/newyork/warehouse')\
+        .option('checkpointLocation','hdfs://192.168.122.60:54310/orders/newyork/check')\
         .format('parquet')\
         .start()
 
