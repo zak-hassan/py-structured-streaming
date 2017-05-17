@@ -51,7 +51,7 @@ if __name__ == "__main__":
     query = df\
         .writeStream\
         .option('path','hdfs://192.168.33.40:54310/orders/devnet/warehouse')\
-        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/devnet/check2')\
+        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/devnet/check3')\
         .format('parquet')\
         .start()
 
