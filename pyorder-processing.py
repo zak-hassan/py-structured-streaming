@@ -22,7 +22,7 @@ if __name__ == "__main__":
         .appName("streamingOrders")\
         .getOrCreate()
     kafkaURI=os.environ.get('KAFKA_URI',"192.168.0.11:9092")
-    kafkaTopic=os.environ.get('KAFKA_TOPIC',"topicA")
+    kafkaTopic=os.environ.get('KAFKA_TOPIC',"devnet")
     hadoopConf=spark.sparkContext._jsc.hadoopConfiguration()
     hadoopConf.set("spark.hadoop.fs.defaultFS", "hdfs://192.168.33.40:54310")
     print("KAFKA CONNECTION: "+ kafkaURI)
@@ -50,8 +50,8 @@ if __name__ == "__main__":
     #     .start()
     query = df\
         .writeStream\
-        .option('path','hdfs://192.168.33.40:54310/orders/sanfrancisco/warehouse')\
-        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/sanfrancisco/check')\
+        .option('path','hdfs://192.168.33.40:54310/orders/devnet/warehouse')\
+        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/devnet/check')\
         .format('parquet')\
         .start()
 
