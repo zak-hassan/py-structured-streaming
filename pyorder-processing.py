@@ -23,7 +23,8 @@ if __name__ == "__main__":
         .getOrCreate()
     kafkaURI=os.environ.get('KAFKA_URI',"192.168.0.11:9092")
     kafkaTopic=os.environ.get('KAFKA_TOPIC',"topicA")
-
+    hadoopConf=spark.sparkContext._jsc.hadoopConfiguration()
+    hadoopConf.set("spark.hadoop.fs.defaultFS", "hdfs://192.168.33.40:54310")
     print("KAFKA CONNECTION: "+ kafkaURI)
     # Create DataSet representing the stream of input lines from kafka
     lines = spark\
@@ -49,8 +50,8 @@ if __name__ == "__main__":
     #     .start()
     query = df\
         .writeStream\
-        .option('path','/orders/sanfrancisco/warehouse')\
-        .option('checkpointLocation','/orders/sanfrancisco/check')\
+        .option('path','hdfs://192.168.33.40:54310/orders/sanfrancisco/warehouse')\
+        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/sanfrancisco/check')\
         .format('parquet')\
         .start()
 
