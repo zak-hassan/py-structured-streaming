@@ -50,8 +50,8 @@ if __name__ == "__main__":
     #     .start()
     query = df\
         .writeStream\
-        .option('path','hdfs://192.168.33.40:54310/orders/devnet/warehouse')\
-        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/devnet/check3')\
+        .option('path','hdfs://192.168.33.40:54310/orders/newyork/warehouse')\
+        .option('checkpointLocation','hdfs://192.168.33.40:54310/orders/newyork/check')\
         .format('parquet')\
         .start()
 
