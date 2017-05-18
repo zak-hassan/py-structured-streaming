@@ -22,7 +22,7 @@ if __name__ == "__main__":
         .appName("streamingOrders")\
         .getOrCreate()
     kafkaURI=os.environ.get('KAFKA_URI',"192.168.0.10:9092")
-    kafkaTopic=os.environ.get('KAFKA_TOPIC',"devnet")
+    kafkaTopic=os.environ.get('KAFKA_TOPIC',"orders")
     print("KAFKA CONNECTION: "+ kafkaURI)
     # Create DataSet representing the stream of input lines from kafka
     lines = spark\
