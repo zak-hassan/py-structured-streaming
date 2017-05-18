@@ -21,8 +21,8 @@ if __name__ == "__main__":
         .builder\
         .appName("streamingOrders")\
         .getOrCreate()
-    kafkaURI=os.environ.get('KAFKA_URI',"192.168.0.10:9092")
-    kafkaTopic=os.environ.get('KAFKA_TOPIC',"orders2")
+    kafkaURI=os.environ.get('KAFKA_URI',"10.15.17.78:9092")
+    kafkaTopic=os.environ.get('KAFKA_TOPIC',"orders")
     print("KAFKA CONNECTION: "+ kafkaURI)
     # Create DataSet representing the stream of input lines from kafka
     lines = spark\
@@ -48,8 +48,8 @@ if __name__ == "__main__":
     #     .start()
     query = df\
         .writeStream\
-        .option('path','hdfs://192.168.122.60:54310/orders/dallas/warehouse')\
-        .option('checkpointLocation','hdfs://192.168.122.60:54310/orders/dallas/check')\
+        .option('path','hdfs://et10.et.eng.bos.redhat.com:9000/orders/newyork/warehouse')\
+        .option('checkpointLocation','hdfs://et10.et.eng.bos.redhat.com:9000/orders/newyork/check')\
         .format('parquet')\
         .start()
 
